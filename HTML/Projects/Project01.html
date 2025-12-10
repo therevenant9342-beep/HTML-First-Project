@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1</title>
+</head>
+<body>
+    <h2>PLEASE FILL THE BOXES BELOW</h2>
+    <main>
+        <form action="">
+            <label for="name">Full Name</label>
+            <input type="text" name="name" id="name">
+            <br><br>
+            <label for="mail">E-mail</label>
+            <input type="email" name="mail" id="mail" placeholder="ex: myname@example.com">
+            <br><br>
+            <label for="phone">Recipient Phone Number</label>
+            <input type="tel" name="phone" id="phone">
+            <br>
+
+            <p>Preference
+                <br>
+                <input type="checkbox" name="ch1" id="ch1">
+                <label for="ch1">Exchange my current cylinder with a prefilled cylinder</label>
+                <br>
+                <input type="checkbox" name="ch2" id="ch2">
+                <label for="ch2">Pick my cylinder, refill and return it to my location</label>
+                <br>
+            </p>
+            <label for="size">My Cylinder size is</label>
+                <select name="size" id="size">
+                <option value="" disabled selected>select size</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                </select>
+                <br><br>
+            <label for="Quantity">Quantity Required</label>
+                <input type="number" name="Quantity" id="Quantity">
+                <br><br>
+                <label for="amount">AMOUNT DUE</label>
+                <input type="text" name="amount" id="amount">
+                <br><br>
+            <label for="Address">Delivery Address (Please include nearest landmarks)</label>
+                <br>
+                <textarea name="Address" id="Address" rows="5" cols="40"></textarea>
+                <br><br>
+            <button type="submit">place order</button>
+
+        </form>
+    </main>
+</body>
+</html>
