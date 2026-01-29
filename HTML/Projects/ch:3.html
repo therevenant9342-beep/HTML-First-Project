@@ -1,208 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ملخص ميكانيكا الموائع - الزتونة (CH3)</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
-
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            color: #2980b9;
-            background-color: #eaf2f8;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 30px;
-            border-right: 5px solid #2980b9;
-        }
-
-        h3 {
-            color: #c0392b;
-            margin-top: 20px;
-        }
-
-        .box {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px 0;
-        }
-
-        .formula {
-            font-size: 1.2em;
-            background-color: #34495e;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
-            margin: 15px 0;
-            direction: ltr;
-            /* للمعادلات */
-        }
-
-        .note {
-            background-color: #fff3cd;
-            border: 1px solid #ffeeba;
-            color: #856404;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        .tip {
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-
-        ul {
-            list-style-type: square;
-            padding-right: 20px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="container">
-        <h1>ملخص "الزتونة" لحل المسائل (CH3)</h1>
-        <p style="text-align: center; font-weight: bold;">خوارزمية الحل السريع للامتحان: ابدأ بالاستمرار، ثم طبق برنولي.
-        </p>
-
-        <!-- القسم الأول: معادلة الاستمرار -->
-        <h2>1. معادلة الاستمرار (Continuity Equation)</h2>
-        <p>الخطوة الأولى في أي مسألة لإيجاد <strong>السرعات المجهولة</strong>.</p>
-
-        <div class="box">
-            <h3>القانون الذهبي (للسوائل Incompressible):</h3>
-            <div class="formula">
-                $$Q = A_1 V_1 = A_2 V_2$$
-            </div>
-            <ul>
-                <li><strong>\(Q\)</strong>: معدل التدفق الحجمي (Discharge) بوحدة \((m^3/s)\).</li>
-                <li><strong>\(A\)</strong>: مساحة المقطع \((m^2)\). للدائرة: \(A = \frac{\pi}{4}D^2\).</li>
-                <li><strong>\(V\)</strong>: سرعة السريان \((m/s)\).</li>
-            </ul>
-        </div>
-
-        <div class="box">
-            <h3>حالة التفرعات (Junctions):</h3>
-            <p>مجموع اللي داخل = مجموع اللي خارج</p>
-            <div class="formula">
-                $$Q_{in} = Q_{out1} + Q_{out2}$$
-                $$A_1 V_1 = A_2 V_2 + A_3 V_3$$
-            </div>
-        </div>
-
-        <div class="note">
-            ⚠️ <strong>فخ الوحدات:</strong> إذا أعطاك التدفق باللتر (Liters/s)، اقسم على 1000 لتحويله إلى \(m^3/s\)
-            فوراً.
-        </div>
-
-        <!-- القسم الثاني: معادلة برنولي -->
-        <h2>2. معادلة برنولي (Bernoulli's Equation)</h2>
-        <p>الخطوة الثانية لإيجاد <strong>الضغوط</strong> أو <strong>الارتفاعات</strong>.</p>
-
-        <div class="box">
-            <h3>الصورة القياسية (Ideal Flow):</h3>
-            <p>تطبق بين نقطتين (1) و (2) على نفس خط الانسياب، بدون احتكاك:</p>
-            <div class="formula">
-                $$\frac{P_1}{\gamma} + \frac{V_1^2}{2g} + z_1 = \frac{P_2}{\gamma} + \frac{V_2^2}{2g} + z_2$$
-            </div>
-            <ul>
-                <li>\(\frac{P}{\gamma}\): ضاغط الضغط (Pressure Head).</li>
-                <li>\(\frac{V^2}{2g}\): ضاغط السرعة (Velocity Head).</li>
-                <li>\(z\): ضاغط الوضع (Elevation Head).</li>
-            </ul>
-        </div>
-
-        <div class="tip">
-            💡 <strong>سر الحل (كيف تختار النقطتين 1 و 2؟):</strong><br>
-            اختر نقاطاً تجعل المجاهيل تساوي <strong>صفراً</strong> لتسهيل المعادلة:
-            <ul>
-                <li><strong>سطح خزان كبير ومعرض للهواء:</strong> \(P = 0\) (ضغط جوي)، \(V \approx 0\).</li>
-                <li><strong>فوهة خروج الماء للجو (Free Jet):</strong> \(P = 0\) (ضغط جوي).</li>
-                <li><strong>نقطة مشتركة (Datum):</strong> اجعل الـ \(z = 0\) عند أخفض نقطة في المسألة.</li>
-            </ul>
-        </div>
-
-        <!-- القسم الثالث: تطبيقات وملاحظات -->
-        <h2>3. حالات خاصة وملاحظات هامة (Tricks)</h2>
-
-        <div class="box">
-            <h3>أ. مسألة تفريغ الخزان (Unsteady Flow):</h3>
-            <p>إذا طلب <strong>الزمن (T)</strong> اللازم لتفريغ خزان من ارتفاع \(h_1\) إلى \(h_2\):</p>
-            <div class="formula">
-                $$T = \frac{2 A_{tank}}{C_d A_{hole} \sqrt{2g}} (\sqrt{h_1} - \sqrt{h_2})$$
-            </div>
-            <p>حيث \(C_d\) هو معامل التصريف (غالباً يعطى أو يفرض 1 في الحالة المثالية).</p>
-        </div>
-
-        <div class="box">
-            <h3>ب. مسألة الفنتوري والمانومتر (Venturi Meter):</h3>
-            <p>بدلاً من حساب \(P_1\) و \(P_2\) كلٌ على حدة، احسب فرق الضغط مباشرة من قراءة المانومتر (\(h\)):</p>
-            <div class="formula">
-                $$\frac{P_1 - P_2}{\gamma_{water}} = h_{manometer} \left( \frac{\gamma_{Hg}}{\gamma_{water}} - 1
-                \right)$$
-            </div>
-            <p>ثم عوض بهذا الفرق في معادلة برنولي المدمجة لإيجاد السرعة.</p>
-        </div>
-
-        <div class="box">
-            <h3>ج. أنبوب بيتوت (Pitot Tube):</h3>
-            <p>عند نقطة اصطدام المائع بمقدمة الأنبوب (Stagnation Point):</p>
-            <ul>
-                <li>السرعة تتلاشى تماماً: <strong>\(V_{stagnation} = 0\)</strong>.</li>
-                <li>يتحول كل ضاغط السرعة إلى ضغط إضافي.</li>
-            </ul>
-        </div>
-
-        <div class="note">
-            ⚠️ <strong>تذكير أخير:</strong>
-            الضغط في معادلة برنولي يجب أن يكون بوحدة <strong>Pascal (Pa)</strong> وليس kPa.
-            <br>
-            الكثافة الوزنية للماء \(\gamma \approx 9810 \, N/m^3\).
-        </div>
-
-    </div>
-
-</body>
-
-</html>
