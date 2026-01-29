@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مخططات Data Warehouse</title>
+    <!-- استدعاء مكتبة Mermaid للرسم -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        .diagram-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .diagram-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+
+        .diagram-desc {
+            color: #4b5563;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .highlight-box {
+            background-color: #e0f2fe;
+            border-right: 4px solid #0284c7;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body class="p-6">
+
+    <div class="max-w-5xl mx-auto text-center mb-8">
+        <h1 class="text-3xl font-bold text-blue-900">رسومات الـ Data Warehouse Schemas</h1>
+        <p class="text-gray-600 mt-2">الدليل البصري الكامل: Star, Snowflake, & Fact Constellation</p>
+    </div>
+
+    <!-- Star Schema Section -->
+    <div class="diagram-container">
+        <h2 class="diagram-title">1. مخطط النجمة (Star Schema) ⭐</h2>
+        <p class="diagram-desc">
+            لاحظ البساطة: جدول الحقائق <strong>(Sales Fact)</strong> في المركز، وتحيط به جداول الأبعاد
+            <strong>(Dimensions)</strong> مباشرة بخطوة واحدة.
+            <br><span class="text-blue-600 font-bold">الميزة:</span> استعلام سريع جداً (عدد Joins قليل).
+        </p>
+        <div class="mermaid flex justify-center">
+            erDiagram
+            %% Fact Table
+            FACT_SALES {
+            int time_key FK
+            int item_key FK
+            int branch_key FK
+            int location_key FK
+            float dollars_sold
+            int units_sold
+            }
+
+            %% Dimensions
+            DIM_TIME {
+            int time_key PK
+            string day
+            string month
+            int year
+            }
+            DIM_ITEM {
+            int item_key PK
+            string name
+            string brand
+            string category
+            }
+            DIM_BRANCH {
+            int branch_key PK
+            string branch_name
+            string branch_type
+            }
+            DIM_LOCATION {
+            int location_key PK
+            string street
+            string city
+            string country
+            }
+
+            %% Relationships (Star shape)
+            FACT_SALES }|..|| DIM_TIME : "Time"
+            FACT_SALES }|..|| DIM_ITEM : "Item"
+            FACT_SALES }|..|| DIM_BRANCH : "Branch"
+            FACT_SALES }|..|| DIM_LOCATION : "Location"
+        </div>
+    </div>
+
+    <!-- Snowflake Schema Section -->
+    <div class="diagram-container" style="border: 2px solid #3b82f6;">
+        <h2 class="diagram-title text-blue-700">2. مخطط ندفة الثلج (Snowflake Schema) ❄️ - شرح مفصل</h2>
+
+        <div class="highlight-box">
+            <h3 class="font-bold text-lg mb-2">ماذا حدث هنا؟ (ركز على السلسلة)</h3>
+            <p>في مخطط النجمة (بالأعلى)، كان جدول <strong>DIM_LOCATION</strong> يحتوي على المدينة والدولة.</p>
+            <p>هنا قمنا بـ "تقشير" الجدول:</p>
+            <ol class="list-decimal list-inside mt-2 space-y-1">
+                <li>جدول <strong>LOCATION</strong> أصبح يحتوي فقط على (الشارع) ومفتاح يشير للمدينة.</li>
+                <li>خرج منه جدول جديد <strong>CITY</strong> يحتوي على (اسم المدينة) ومفتاح يشير للدولة.</li>
+                <li>خرج منه جدول ثالث <strong>COUNTRY</strong> يحتوي على (اسم الدولة).</li>
+            </ol>
+            <p class="mt-2 text-sm text-gray-600"><strong>النتيجة:</strong> شكل متفرع يشبه الثلج، يوفر مساحة تخزين لكنه
+                يبطئ البحث.</p>
+        </div>
+
+        <div class="mermaid flex justify-center">
+            erDiagram
+            %% Fact Table
+            FACT_SALES {
+            int item_key FK
+            int location_key FK "مفتاح الموقع فقط"
+            float dollars_sold
+            }
+
+            %% Dimensions
+            DIM_ITEM {
+            int item_key PK
+            string name
+            }
+
+            %% The Snowflaking Chain
+            DIM_LOCATION {
+            int location_key PK
+            string street
+            int city_key FK "يشير للمدينة"
+            }
+            DIM_CITY {
+            int city_key PK
+            string city_name
+            int country_key FK "يشير للدولة"
+            }
+            DIM_COUNTRY {
+            int country_key PK
+            string country_name
+            }
+
+            %% Relationships
+            FACT_SALES }|..|| DIM_ITEM : "Item"
+
+            %% The Chain Visualized
+            FACT_SALES }|..|| DIM_LOCATION : "1. مربوط بالموقع"
+            DIM_LOCATION }|..|| DIM_CITY : "2. الموقع مربوط بالمدينة"
+            DIM_CITY }|..|| DIM_COUNTRY : "3. المدينة مربوطة بالدولة"
+        </div>
+    </div>
+
+    <!-- Fact Constellation Section -->
+    <div class="diagram-container">
+        <h2 class="diagram-title">3. مجموعة النجوم (Fact Constellation / Galaxy) 🌌</h2>
+        <p class="diagram-desc">
+            هنا لدينا <strong>جدولين للحقائق</strong>: واحد للمبيعات (Sales) وواحد للشحن (Shipping).
+            <br>لاحظ كيف يتشاركان في نفس أبعاد الوقت (Time) والمنتج (Item). هذا يوفر المساحة ويمنع التكرار.
+        </p>
+        <div class="mermaid flex justify-center">
+            erDiagram
+            %% Fact Table 1
+            FACT_SALES {
+            int time_key FK
+            int item_key FK
+            int branch_key FK
+            float dollars_sold
+            }
+
+            %% Fact Table 2
+            FACT_SHIPPING {
+            int time_key FK
+            int item_key FK
+            int shipper_key FK
+            float shipping_cost
+            }
+
+            %% Shared Dimensions
+            DIM_TIME {
+            int time_key PK
+            int year
+            }
+            DIM_ITEM {
+            int item_key PK
+            string name
+            }
+
+            %% Specific Dimensions
+            DIM_BRANCH {
+            int branch_key PK
+            string name
+            }
+            DIM_SHIPPER {
+            int shipper_key PK
+            string shipper_name
+            }
+
+            %% Relationships
+            FACT_SALES }|..|| DIM_TIME : "Shared Time"
+            FACT_SHIPPING }|..|| DIM_TIME : "Shared Time"
+
+            FACT_SALES }|..|| DIM_ITEM : "Shared Item"
+            FACT_SHIPPING }|..|| DIM_ITEM : "Shared Item"
+
+            FACT_SALES }|..|| DIM_BRANCH : "Sales Only"
+            FACT_SHIPPING }|..|| DIM_SHIPPER : "Shipping Only"
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            er: {
+                useMaxWidth: true,
+                layoutDirection: 'TB',
+                minEntityWidth: 100
+            }
+        });
+    </script>
+</body>
+
+</html>

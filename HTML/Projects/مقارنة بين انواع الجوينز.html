@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل تمارين ملف Joins ودليل الربط الشامل</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .join-type {
+            background-color: #fee2e2;
+            border-right: 4px solid #ef4444;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .inner-join {
+            background-color: #dcfce7;
+            border-right: 4px solid #22c55e;
+        }
+
+        .code-block {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            direction: ltr;
+            text-align: left;
+            margin: 10px 0;
+        }
+
+        .sql-keyword {
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        .sql-table {
+            color: #fbbf24;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-indigo-700 text-white py-8 text-center shadow-md">
+        <h1 class="text-3xl font-bold">الدليل الشامل لأنواع الـ SQL Joins</h1>
+        <p class="mt-2 text-indigo-100">تحليل تمارين الملف ومقارنة احترافية بالأمثلة</p>
+    </header>
+
+    <main class="max-w-5xl mx-auto p-6 space-y-12">
+
+        <!-- القسم الأول: تحليل تمارين PDF -->
+        <section>
+            <h2 class="text-2xl font-bold text-gray-700 border-b-2 border-indigo-200 pb-2 mb-6">1. تحليل محتوى ملف الـ
+                PDF (Joins.pdf)</h2>
+            <div class="bg-blue-50 border-r-4 border-blue-500 p-4 rounded shadow-sm mb-6">
+                <p class="text-blue-900 text-lg">
+                    تمارين الملف المرفوع تركز بالكامل على الـ <span class="inner-join px-2">Inner Join</span>. إليك
+                    تفاصيل استخداماتها هناك:
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-5 rounded-lg shadow border border-gray-200">
+                    <h4 class="font-bold text-indigo-600 mb-2 underline">الربط التقليدي (Equi-Join)</h4>
+                    <p class="text-sm text-gray-600 italic mb-2">مثال صفحة 1 و 2 (City & Country)</p>
+                    <p>يعتمد على تساوي القيم في العمود المشترك. النتائج تظهر فقط إذا كان للمدينة دولة مقابلة.</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow border border-gray-200">
+                    <h4 class="font-bold text-indigo-600 mb-2 underline">الربط غير المتساوي (Non-Equi Join)</h4>
+                    <p class="text-sm text-gray-600 italic mb-2">مثال صفحة 3 (Students & Grades)</p>
+                    <p>الربط يتم عبر نطاق قيم <code class="bg-gray-100 font-bold px-1">BETWEEN</code>. الطالب يرتبط
+                        بالدرجة التي يقع رقم درجاته في مداها.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- القسم الثاني: المقارنة الكبرى بين أنواع الـ Joins -->
+        <section>
+            <h2 class="text-2xl font-bold text-red-700 border-b-2 border-red-200 pb-2 mb-6">2. المقارنة الشاملة (أنواع
+                الـ Joins)</h2>
+
+            <p class="mb-6">لنتخيل وجود جدولين: <span class="font-bold">Students</span> (الطلاب) و <span
+                    class="font-bold">Courses</span> (الكورسات).</p>
+
+            <div class="space-y-10">
+                <!-- Inner Join -->
+                <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-green-500">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full font-bold">1. Inner Join</span>
+                        <h3 class="text-xl font-bold">الربط الداخلي (المشترك فقط)</h3>
+                    </div>
+                    <p class="mb-4">يعيد فقط الصفوف التي لها <strong>قيم متطابقة في كلا الجدولين</strong>. إذا كان هناك
+                        طالب لم يسجل في كورس، لن يظهر.</p>
+                    <div class="code-block">
+                        <span class="sql-keyword">SELECT</span> Students.Name, Courses.CourseName <br>
+                        <span class="sql-keyword">FROM</span> Students <br>
+                        <span class="sql-keyword">INNER JOIN</span> Courses <span class="sql-keyword">ON</span>
+                        Students.CourseID = Courses.ID;
+                    </div>
+                    <p class="text-sm text-gray-500 italic">📌 النتيجة: قائمة بالطلاب المسجلين "فقط" وأسماء كورساتهم.
+                    </p>
+                </div>
+
+                <!-- Left Join -->
+                <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-500">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-bold">2. Left (Outer)
+                            Join</span>
+                        <h3 class="text-xl font-bold">الربط اليساري (كل ما في اليسار)</h3>
+                    </div>
+                    <p class="mb-4">يعيد <strong>جميع السجلات من الجدول الأيسر</strong>، مع السجلات المطابقة من الجدول
+                        الأيمن. إذا لم يوجد تطابق، تظهر قيم <span class="text-red-500 font-bold">NULL</span>.</p>
+                    <div class="code-block">
+                        <span class="sql-keyword">SELECT</span> Students.Name, Courses.CourseName <br>
+                        <span class="sql-keyword">FROM</span> Students <br>
+                        <span class="sql-keyword">LEFT JOIN</span> Courses <span class="sql-keyword">ON</span>
+                        Students.CourseID = Courses.ID;
+                    </div>
+                    <p class="text-sm text-gray-500 italic">📌 النتيجة: قائمة بـ "كل الطلاب"، ومن ليس لديه كورس سيظهر
+                        بجانب اسمه "NULL".</p>
+                </div>
+
+                <!-- Right Join -->
+                <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-orange-500">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full font-bold">3. Right (Outer)
+                            Join</span>
+                        <h3 class="text-xl font-bold">الربط اليميني (كل ما في اليمين)</h3>
+                    </div>
+                    <p class="mb-4">يعيد <strong>جميع السجلات من الجدول الأيمن</strong>. نستخدمه إذا كنا نريد رؤية كل
+                        الكورسات حتى التي لم يسجل فيها أحد.</p>
+                    <div class="code-block">
+                        <span class="sql-keyword">SELECT</span> Students.Name, Courses.CourseName <br>
+                        <span class="sql-keyword">FROM</span> Students <br>
+                        <span class="sql-keyword">RIGHT JOIN</span> Courses <span class="sql-keyword">ON</span>
+                        Students.CourseID = Courses.ID;
+                    </div>
+                    <p class="text-sm text-gray-500 italic">📌 النتيجة: قائمة بـ "كل الكورسات"، والكورس الذي لا يوجد فيه
+                        طلاب سيظهر بجانبه "NULL" في مكان الاسم.</p>
+                </div>
+
+                <!-- Full Join -->
+                <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-purple-500">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-bold">4. Full Outer
+                            Join</span>
+                        <h3 class="text-xl font-bold">الربط الخارجي الكامل (الكل)</h3>
+                    </div>
+                    <p class="mb-4">يعيد السجلات عندما يكون هناك تطابق في أحد الجدولين. باختصار: يدمج نتائج Left و Right
+                        معا.</p>
+                    <div class="code-block">
+                        <span class="sql-keyword">SELECT</span> Students.Name, Courses.CourseName <br>
+                        <span class="sql-keyword">FROM</span> Students <br>
+                        <span class="sql-keyword">FULL OUTER JOIN</span> Courses <span class="sql-keyword">ON</span>
+                        Students.CourseID = Courses.ID;
+                    </div>
+                    <p class="text-sm text-gray-500 italic">📌 النتيجة: كل الطلاب (سواء سجلوا أم لا) + كل الكورسات (سواء
+                        فيها طلاب أم لا).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ملخص الحالات -->
+        <div class="bg-slate-800 text-white p-8 rounded-2xl shadow-xl">
+            <h3 class="text-2xl font-bold mb-6 text-center text-indigo-300">متى أختار نوع الربط؟ (خلاصة سريعة للامتحان)
+            </h3>
+            <div class="grid md:grid-cols-3 gap-6 text-center">
+                <div class="p-4 border border-slate-600 rounded-lg">
+                    <h5 class="font-bold text-green-400 mb-2">Inner</h5>
+                    <p class="text-sm">أريد البيانات المرتبطة ببعضها فقط.</p>
+                </div>
+                <div class="p-4 border border-slate-600 rounded-lg">
+                    <h5 class="font-bold text-blue-400 mb-2">Left</h5>
+                    <p class="text-sm">أريد "كل" البيانات من الجدول الرئيسي (الأول).</p>
+                </div>
+                <div class="p-4 border border-slate-600 rounded-lg">
+                    <h5 class="font-bold text-orange-400 mb-2">Right</h5>
+                    <p class="text-sm">أريد التأكد من تغطية "كل" بيانات الجدول التابع (الثاني).</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-10 text-gray-400 text-sm">
+        تم تحديث الدليل ليشمل مقارنة الأنواع - مراجعة موفقة!
+    </footer>
+
+</body>
+
+</html>
